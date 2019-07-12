@@ -1,5 +1,7 @@
 package fr.eni.formation.geometrie;
 
+import fr.eni.formation.geometrie.visitor.FigureParser;
+
 public class CarreBuilder {
 
     public Point origine;
@@ -23,5 +25,28 @@ public class CarreBuilder {
 
     public Carre build() {
         return new Carre(origine, cote);
+    }
+
+
+    /* Design Pattern Visitor */
+    private FigureParser visitor = null;
+
+    public CarreBuilder fromSource(String source, FigureParser visitor){
+        acceptParser(visitor);
+        fromSource(source);
+        return this;
+    }
+
+    public CarreBuilder fromSource(String source){
+
+        double[] data = visitor.parseData(source);
+        this.setOrigine(Point.createPoint(data[0], data[1]));
+        this.setCote(data[2]);
+        return this;
+    }
+
+    public CarreBuilder acceptParser(FigureParser visitor){
+        this.visitor = visitor;
+        return this;
     }
 }

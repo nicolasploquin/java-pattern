@@ -13,8 +13,18 @@ public class Dessin {
 
     }
 
-    public Dessin getInstance() {
+    public static Dessin getInstance() {
         if(instance == null) instance = new Dessin();
         return instance;
+    }
+
+    public ElementIterator iterator(){
+        return new ElementIterator(formes);
+    }
+
+    public void print(){
+        for(Element elem : formes){
+            System.out.println(elem);
+        }
     }
 }
